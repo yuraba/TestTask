@@ -8,12 +8,15 @@ namespace WebApplication1.Controllers;
 public class IncidentController : Controller
 {
         protected ResponseDto _response;
+        protected MainResponse _mainResponse;
+
         private IIncidentRepository _incidentRepository;
 
         public IncidentController(IIncidentRepository incidentRepository)
         {
             _incidentRepository = incidentRepository;
             this._response = new ResponseDto();
+            this._mainResponse = new MainResponse();
         }
 
         [HttpGet]
@@ -56,15 +59,18 @@ public class IncidentController : Controller
             try
             {
                 IncidentDto model = await _incidentRepository.CreateUpdateIncident(incidentDto);
-                _response.Result = model;
+                _mainResponse.Description = model.Description;
+                _mainResponse.AccountBody = model.Accounts;
+
             }
             catch (Exception ex)
-            {
+            { 
                 _response.IsSuccess = false;
                 _response.ErrorMessages = new List<string>() { ex.ToString() };
+                return _response;
             }
 
-            return _response;
+            return _mainResponse;
         }
         [HttpPut]
         public async Task<object> Put([FromBody] IncidentDto incidentDto)

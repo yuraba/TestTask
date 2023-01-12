@@ -6,6 +6,8 @@ namespace WebApplication1.Models.DTO;
 
 public class ContactDto
 {
+    [JsonIgnore]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int ContacdId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }

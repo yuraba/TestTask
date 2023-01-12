@@ -6,6 +6,9 @@ namespace WebApplication1.Models.DTO;
 
 public class AccountDto
 {
+    
+    [JsonIgnore]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int AccountId { get; set; }
     public string AccountName { get; set; }
     [JsonIgnore]

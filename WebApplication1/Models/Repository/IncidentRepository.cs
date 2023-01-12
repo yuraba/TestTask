@@ -32,19 +32,17 @@ public class IncidentRepository : IIncidentRepository
     public async Task<IncidentDto> CreateUpdateIncident(IncidentDto incidentDto)
     {
         var validator = new IncidentValidator();
-        
-
         Incident incident = _mapper.Map<IncidentDto, Incident>(incidentDto);
         var validatorResult = validator.Validate(incident);
         if (validatorResult.IsValid)
         {
-            if (incident.IncidentName.Length > 0)
+            if (incident.IncidentName == null)
             {
-                _db.Incidents.Update(incident);
+                 _db.Incidents.Add(incident);
             }
             else
             {
-                _db.Incidents.Add(incident);
+               _db.Incidents.Update(incident);
             }
 
             await _db.SaveChangesAsync();

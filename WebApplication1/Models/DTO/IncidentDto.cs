@@ -10,6 +10,6 @@ public class IncidentDto
     [JsonIgnore]
     public string IncidentName { get; set; }
     public string Description { get; set; }
-    [JsonIgnore]
-    public ICollection<Account> Accounts { get; set; }
+    public ICollection<Account>? Accounts { get; set; }
+    
 }
